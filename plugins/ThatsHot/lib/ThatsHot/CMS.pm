@@ -50,22 +50,40 @@ sub settings {
     return $app->build_page($tmpl);
 }
 
-sub init_app {
-    # Use this to hide the menu items from any blog that does not have the plugin enabled.
-    my ($cb, $app) = @_;
-    return if $app->id eq 'wizard'; # MT is being installed.
-
-    # Check to see that we're in the blog context (and not the system context).
-    my $blog = $app->blog;
-    if ($blog) {
-        my $plugin = MT->component('thatshot');
-        my $switch = $plugin->get_config_value('th_enable', 'blog:'.$blog->id);
-        if (!$switch) { # the switch is disabled. Do not show the menu options.
-            delete $plugin->{registry}->{applications}->{cms}->{menus}->{'create:hot_topic'};
-            delete $plugin->{registry}->{applications}->{cms}->{menus}->{'manage:hot_topics'};
-            return {};
-        }
-    }
+sub update_menus {
+    # Add the That's Hot menu items only if That's Hot is enabled on this blog.
+    return {
+        'create:hot_topic' => {
+            label      => 'Hot Topic',
+            order      => '500',
+            dialog     => 'add_hot_topic',
+            view       => 'blog',
+            condition  => sub {
+                my $blog = MT->instance->blog;
+                return 0 if !$blog;
+                my $plugin = MT->component('thatshot');
+                return if !$plugin;
+                my $switch = $plugin->get_config_value('th_enable', 'blog:'.$blog->id);
+                return 1 if $switch;
+                return 0;
+            },
+        },
+        'manage:hot_topics' => {
+            label      => 'Hot Topics',
+            order      => '500000',
+            mode       => 'list_hot_topics',
+            view       => 'blog',
+            condition  => sub {
+                my $blog = MT->instance->blog;
+                return 0 if !$blog;
+                my $plugin = MT->component('thatshot');
+                return if !$plugin;
+                my $switch = $plugin->get_config_value('th_enable', 'blog:'.$blog->id);
+                return 1 if $switch;
+                return 0;
+            },
+        },
+    };
 }
 
 sub add_hot_topic {
