@@ -1,12 +1,16 @@
 # That's Hot Overview
 
-That's Hot is a plugin for Movable Type that helps you manage and publish links and search keywords. The twist That's Hot offers is that your link or search (a "Topic") starts life "hot" and becomes "cold" after a specified amount of time passes. Topics can be reheated over and over to appear at the top of the hot list again. A history of each topic's life is also maintained so that you can see how frequently it's been hot. Topics can also be scheduled to be hot.
+That's Hot is a plugin for Movable Type that helps you manage and publish links and search keywords. The twist That's Hot offers is that your link or search (a "Topic") starts life "hot" and becomes "cold" after a specified amount of time passes. Topics can be reheated over and over to appear at the top of the "hot list" again. A history of each topic's life is also maintained so that you can see how frequently it's been hot. Topics can also be scheduled to be hot.
 
+* Easily add new Topics, which are published when saving
+* Search existing Topics by keyword or URL to prevent creation of near-duplicate Topics
+* See the history of a Topic's life
+* Publish Topics however desired with template tags
 
 # Prerequisites
 
 * Movable Type 4.x
-* That's Hot makes use of Movable Type's tasks framework, which requires that run-periodic-tasks be running or an Activity Feed be subscribed to.
+* That's Hot makes use of Movable Type's tasks framework, which requires that `run-periodic-tasks` be running or an Activity Feed be subscribed to.
 
 
 # Installation
@@ -18,7 +22,7 @@ http://tinyurl.com/easy-plugin-install
 
 # Configuration
 
-That's Hot can be configured at the Blog level. Visit Preferences > Plugins to find That's Hot, then click Settings.
+That's Hot is configured at the Blog level. Visit Preferences > Plugins to find That's Hot, then click Settings.
 
 By default, That's Hot is *disabled* for each blog. **Enable** it for the blog(s) you want to use it with. This little step is an easy way to be sure that hot topics are created only in the master blog.
 
@@ -26,24 +30,24 @@ Topics can be kept "hot" for a specified amount of time. After that time has ela
 
 It's quite possible the designated area on your site where you want to publish your hot topics to has a limited amount of space, or you want to keep track of how many topics you're publishing there. Use the **Hot Topic Soft Limit** setting to help manage this by specifying an acceptable maximum number of hot topics. When this number is hit users will see a notification when adding a new hot topic, informing them that this limit has been hit. This is a soft limit, and does *not* prevent additional topics from being added.
 
-After a topic has been heated or cooled, you probably want to see a template be republished with this updated data. Use the **Republish this Template** option to do that. Select an index template to be republished.
+After a topic has been heated or cooled, you probably want a template to be republished with this updated data. Use the **Republish this Template** option to do that. Select an index template to be republished.
 
 
-# Use
+# Using That's Hot
 
 ## Add Hot Topic
 
 Create a hot topic with this screen, found in Create > Hot Topic. Specify a topic title and a URL or search keyword, then make the topic hot now or schedule it for future hotness. Save.
 
-Enter only partial details--part of a title or URL, for example--to search for an existing topic to reheat. If only one search result is found, That's Hot offers to reheat the existing topic--make it hot now or schedule hotness and save. If many search results are found, they are all returned so you can select which topic to make or schedule hot and save.
+Enter only partial details--part of a title or URL, for example--to search for an existing topic to reheat. If only one search result is found, That's Hot offers to reheat the existing topic--make it hot now or schedule hotness and save. If many search results are found, they are all returned so you can select which topic to reheat or schedule and save.
 
-Upon successful save, the specified template is republished.
+Upon successful save, the index template specified in the plugin's Settings is republished.
 
 ## Manage Hot Topics
 
 The Manage screen lets you work with all topics and is found in Manage > Hot Topics. This listing screen displays all scheduled hot, currently hot, and previously hot topics. These three statuses are indicated by different colored status icons. This screen can display the same topic several times, indicating that it is currently hot and was previously hot.
 
-Reheat a topic by selecting it and clicking the "Reheat" page action. Pull a topic from the hot list by selecting it an clicking "Make Cold"--notice that the topic is not removed, but the status is simply changed to "Cold." Use the Quickfilters to see a history of hot topics.
+Reheat a topic by selecting it and clicking the "Reheat" page action. Pull a topic from the hot list by selecting it and clicking "Make Cold"--notice that the topic is not removed, but the status is simply changed to "Cold." Use the Quickfilters to see a history of hot topics.
 
 ## Edit Topic
 
@@ -60,21 +64,23 @@ A handful of template tags will expose the plugin's functionality to templates.
 
 ## Block tags:
 
-**HotTopics**: returns all hot topics, and their history. This is most likely the block tag you want to use. This block has the meta loop variables available (\_\_first\_\_, \_\_last\_\_, \_\_odd\_\_, \_\_even\_\_, \_\_counter\_\_). This block has several valid arguments:
-* id: specify the ID of a topic to create a complete history of only that topic.
-* status valid options: 'hot' *or* 'cold'; the default is to return both 'hot' and 'cold.'
-* class valid options: 'url' *or* 'keyword'; the default is to return both url and 'keyword.'
-* sort\_by valid options: created\_on, created\_by. Default: created_on
-* sort\_order: valid options: descend, ascend. Default: descend
-* limit: an integer used to limit the number of results.
-* offset: start the results "n" topics from the start of the list.
+**HotTopics**: returns all hot topics, and their history. This is most likely the block tag you want to use. This block has the meta loop variables available (`__first__`, `__last__`, `__odd__`, `__even__`, `__counter__`). This block has several valid arguments:
 
-**Topics**: returns all topics. Topics are unique. This block has the meta loop variables available (\_\_first\_\_, \_\_last\_\_, \_\_odd\_\_, \_\_even\_\_, \_\_counter\_\_). This block tag has several valid arguments:
-* class valid options: 'url' *or* 'keyword'; the default is to return both 'url' and 'keyword.'
-* sort\_by valid options: created\_on, modified\_on, title, data (which refers to the URL or keyword). Default: created_on
-* sort\_order: valid options: descend, ascend. Default: descend
-* limit: an integer used to limit the number of results.
-* offset: start the results "n" topics from the start of the list.
+* `id`: specify the ID of a topic to create a complete history of only that topic.
+* `status` valid options: `hot` *or* `cold`; the default is to return both hot and cold topics.
+* `class` valid options: `url` *or* `keyword`; the default is to return both url and keyword topics.
+* `sort_by` valid options: `created_on`, `created_by`. Default: `created_on`
+* `sort_order`: valid options: `descend`, `ascend`. Default: `descend`
+* `limit`: an integer used to limit the number of results.
+* `offset`: start the results "n" topics from the start of the list.
+
+**Topics**: returns all topics. Topics are unique. This block has the meta loop variables available (`__first__`, `__last__`, `__odd__`, `__even__`, `__counter__`). This block tag has several valid arguments:
+
+* `class` valid options: `url` *or* `keyword`; the default is to return both url and keyword topics.
+* `sort_by` valid options: `created_on`, `modified_on`, `title`, `data` (which refers to the URL or keyword). Default: `created_on`
+* `sort_order`: valid options: `descend`, `ascend`. Default: `descend`
+* `limit`: an integer used to limit the number of results.
+* `offset`: start the results "n" topics from the start of the list.
 
 ## Function tags:
 
@@ -139,6 +145,6 @@ http://uinnovations.com/
 
 This plugin is licensed under the same terms as Perl itself.
 
-#Copyright
+# Copyright
 
 Copyright 2009, Endevver LLC. All rights reserved.
