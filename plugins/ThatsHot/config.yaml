@@ -4,7 +4,7 @@ description: 'Create links to &ldquo;Hot Topics&rdquo;'
 author_name: Endevver
 author_link: http://endevver.com
 icon: 'images/icon.png'
-version: 1.0.1
+version: 1.0.2
 schema_version: 7
 
 settings:

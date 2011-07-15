@@ -1120,7 +1120,10 @@ sub _republish_template {
     # Was a template ID saved? If so, we want to republish it!
     if ($template) {
         use MT::Template;
-        my $t = MT::Template->load({id => $template});
+        my $t = MT::Template->load({
+            id   => $template,
+            type => 'index',
+        });
 
         if ($t) { # Found the template!
             use MT::WeblogPublisher;
