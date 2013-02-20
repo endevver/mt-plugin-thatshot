@@ -1,8 +1,9 @@
 name: "That's Hot"
 id: thats_hot
 description: 'Create links to &ldquo;Hot Topics&rdquo;'
-author_name: Endevver
+author_name: 'Dan Wolfgang, Endevver'
 author_link: http://endevver.com
+plugin_link: https://github.com/endevver/mt-plugin-thatshot
 icon: 'images/icon.png'
 version: 1.0.2
 schema_version: 7
